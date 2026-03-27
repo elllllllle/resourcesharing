@@ -19,8 +19,8 @@ const Register = () => {
 
   return (
     <div className="max-w-md mx-auto mt-20">
-      <form onSubmit={handleSubmit} className="bg-white p-6 shadow-md rounded">
-        <h1 className="text-2xl font-bold mb-4 text-center">Register</h1>
+      <form onSubmit={handleSubmit}>
+        <h1 className="text-2xl font-bold mb-4 text-center">Create your account</h1>
         <input
           type="text"
           placeholder="Name"
@@ -42,8 +42,8 @@ const Register = () => {
           onChange={(e) => setFormData({ ...formData, password: e.target.value })}
           className="w-full mb-4 p-2 border rounded"
         />
-        <button type="submit" className="w-full bg-green-600 text-white p-2 rounded">
-          Register
+        <button type="submit" className="w-full bg-[#89D440] text-white p-2 rounded-full hover:bg-[#66BF0F]">
+          Create an Account
         </button>
       </form>
     </div>

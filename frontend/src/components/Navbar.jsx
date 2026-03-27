@@ -11,16 +11,16 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-blue-600 text-white p-4 flex justify-between items-center">
-      <Link to="/" className="text-2xl font-bold">Your apps name</Link>
+    <nav className="bg-white border border-b-[#E0E0E0] p-4 flex justify-between items-center">
+      <Link to="/" className="text-[#89D440] text-2xl font-bold">ShareMate</Link>
       <div>
         {user ? (
           <>
-            <Link to="/tasks" className="mr-4">CRUD</Link>
+            <Link to="/resources" className="mr-4">Find Resources</Link>
             <Link to="/profile" className="mr-4">Profile</Link>
             <button
               onClick={handleLogout}
-              className="bg-red-500 px-4 py-2 rounded hover:bg-red-700"
+              className="bg-[#F54949] text-white px-4 py-2 rounded-full hover:bg-[#D84040]"
             >
               Logout
             </button>
@@ -30,7 +30,7 @@ const Navbar = () => {
             <Link to="/login" className="mr-4">Login</Link>
             <Link
               to="/register"
-              className="bg-green-500 px-4 py-2 rounded hover:bg-green-700"
+              className="bg-[#89D440] text-white px-4 py-2 rounded-full hover:bg-[#66BF0F]"
             >
               Register
             </Link>
