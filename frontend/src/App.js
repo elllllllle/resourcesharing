@@ -4,23 +4,23 @@ import Navbar from './components/Navbar';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Resources from './pages/Resources';
+import BrowseListings from './pages/BrowseListings';
+import ListingDetail from './pages/ListingDetail';
 import Profile from './pages/Profile';
 
 function AppRoutes() {
   const { user } = useAuth();
-
   return (
     <>
       <Navbar />
       <Routes>
-        <Route
-          path="/"
-          element={<Navigate to={user ? '/resources' : '/login'} />}
-        />
+        <Route path="/" element={<Navigate to="/browse" />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/resources" element={<Resources />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route path="/browse" element={<BrowseListings />} />
+        <Route path="/resources/:id" element={<ListingDetail />} />
+        <Route path="/resources" element={user ? <Resources /> : <Navigate to="/login" />} />
+        <Route path="/profile" element={user ? <Profile /> : <Navigate to="/login" />} />
       </Routes>
     </>
   );
