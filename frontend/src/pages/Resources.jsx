@@ -14,18 +14,24 @@ const Resources = () => {
       setResources([]);
       return;
     }
-
     const fetchResources = async () => {
       try {
         const response = await axiosInstance.get('/api/resources');
-        console.log('GET /api/resources response:', response.data);
-        setResources(response.data);
+
+        // only show logged-in user's own listings
+        const myResources = response.data.filter((r) => {
+          const createdById =
+            typeof r.createdBy === 'object'
+              ? r.createdBy._id || r.createdBy.id
+              : r.createdBy;
+          return String(createdById) === String(user._id || user.id);
+        });
+        setResources(myResources);
       } catch (error) {
         console.error('GET resources failed:', error);
         alert('GET resources failed.');
       }
     };
-
     fetchResources();
   }, [user]);
 
@@ -51,7 +57,6 @@ const Resources = () => {
           editingResource={editingResource}
           setEditingResource={setEditingResource}
         />
-
         <ResourceList
           resources={resources}
           setResources={setResources}

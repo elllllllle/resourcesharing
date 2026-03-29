@@ -5,6 +5,7 @@ const ResourceList = ({ resources, setResources, setEditingResource }) => {
   const { user } = useAuth();
 
   const handleDelete = async (resourceId) => {
+    if (!window.confirm('Are you sure you want to delete this listing?')) return;
     try {
       await axiosInstance.delete(`/api/resources/${resourceId}`, {
         headers: { Authorization: `Bearer ${user.token}` },
@@ -16,74 +17,60 @@ const ResourceList = ({ resources, setResources, setEditingResource }) => {
     }
   };
 
-  const isOwner = (resource) => {
-    if (!user || !resource.createdBy) return false;
-
-    const createdById =
-      typeof resource.createdBy === 'object'
-        ? resource.createdBy._id || resource.createdBy.id
-        : resource.createdBy;
-
-    const userId = user._id || user.id;
-
-    return String(createdById) === String(userId);
-  };
-
-  const getCreatorName = (resource) => {
-  if (!resource.createdBy) return 'Unknown user';
-
-  if (typeof resource.createdBy === 'object') {
-    return resource.createdBy.name || 'Unknown user';
+  if (resources.length === 0) {
+    return (
+      <p className="text-center text-gray-500 mt-10">
+        You have no listings yet. Create one above!
+      </p>
+    );
   }
 
-  return 'Unknown user';
-  };
-
   return (
-    <div>
-      {resources.length === 0 ? (
-        <p className="text-gray-500">No resources available.</p>
-      ) : (
-        resources.map((resource) => (
-          <div key={resource._id} className="bg-white p-5 mb-4 rounded-xl border border-[#E0E0E0] hover:shadow-lg transition">
-            <div className="flex justify-between items-start">
-
-              <div>
-                <p>
-                  <span className="text-[#86C5FF] text-xs rounded-full font-medium">
+    <div className="mt-10">
+      <h2 className="text-2xl font-bold mb-4">My Listings</h2>
+      <div className="bg-white rounded-xl border border-[#E0E0E0] overflow-hidden">
+        <table className="w-full text-sm">
+          <thead className="text-xs text-gray-500 uppercase">
+            <tr>
+              <th className="px-4 py-3 text-left">Title</th>
+              <th className="px-4 py-3 text-left">Category</th>
+              <th className="px-4 py-3 text-left">Location</th>
+              <th className="px-4 py-3 text-left">Status</th>
+              <th className="px-4 py-3 text-left">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {resources.map((resource) => (
+              <tr key={resource._id} className="border-t border-gray-100 hover:bg-gray-50">
+                <td className="px-4 py-3 font-bold">{resource.title}</td>
+                <td className="px-4 py-3">{resource.category}</td>
+                <td className="px-4 py-3">{resource.location}</td>
+                <td className="px-4 py-3">
+                  <span className="text-[#86C5FF]">
                     {resource.availabilityStatus}
                   </span>
-                </p>
-                <h2 className="text-xl font-semibold text-grey-800">{resource.title}</h2>
-                <p className="text-sm text-gray-500 mb-2">{resource.category}</p>
-                <p className="text-gray-700 mb-2">{resource.description}</p>
-                <div className="text-sm text-gray-500 flex gap-4">
-                  <span>👤 {resource.createdBy?.name || 'Unknown user'}</span>
-                  <span>📍 {resource.location}</span>
-                </div>
-              </div>
-
-              {isOwner(resource) && (
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => setEditingResource(resource)}
-                    className="mr-2 bg-[#89D440] text-white px-4 py-2 rounded-full hover:bg-[#66BF0F]"
-                  >
-                    Edit
-                  </button>
-
-                  <button
-                    onClick={() => handleDelete(resource._id)}
-                    className="bg-[#F54949] text-white px-4 py-2 rounded-full hover:bg-[#D84040]"
-                  >
-                    Delete
-                  </button>
-                </div>
-              )}
-            </div>
-          </div>
-        ))
-      )}
+                </td>
+                <td className="px-4 py-3">
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => setEditingResource(resource)}
+                      className="px-3 py-1 rounded-full hover:bg-[#F4F4F4]"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      onClick={() => handleDelete(resource._id)}
+                      className="text-[#F54949] px-3 py-1 rounded-full hover:bg-[#F4F4F4]"
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };

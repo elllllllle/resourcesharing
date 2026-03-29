@@ -60,92 +60,101 @@ const AdminPanel = () => {
         <div className="flex gap-4 mb-6">
           <button
             onClick={() => setActiveTab('listings')}
-            className={`px-6 py-2 rounded-full font-medium ${
+            className={`px-6 py-2 rounded-full ${
               activeTab === 'listings'
                 ? 'bg-[#89D440] text-white'
-                : 'bg-white border border-gray-300 text-gray-600'
+                : 'bg-white border border-gray-300 text-gray-500'
             }`}
           >
-            Manage Listings
+            Listing Management
           </button>
           <button
             onClick={() => setActiveTab('users')}
-            className={`px-6 py-2 rounded-full font-medium ${
+            className={`px-6 py-2 rounded-full ${
               activeTab === 'users'
                 ? 'bg-[#89D440] text-white'
-                : 'bg-white border border-gray-300 text-gray-600'
+                : 'bg-white border border-gray-300 text-gray-500'
             }`}
           >
-            Manage Users
+            User Management
           </button>
         </div>
 
         {/* Listings Tab */}
         {activeTab === 'listings' && (
-          <div className="bg-white rounded-xl border border-[#E0E0E0] overflow-hidden">
-            <table className="w-full text-sm">
-              <thead className="bg-gray-50 text-gray-500 uppercase text-xs">
-                <tr>
-                  <th className="px-4 py-3 text-left">Title</th>
-                  <th className="px-4 py-3 text-left">Category</th>
-                  <th className="px-4 py-3 text-left">Owner</th>
-                  <th className="px-4 py-3 text-left">Status</th>
-                  <th className="px-4 py-3 text-left">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {listings.map((listing) => (
-                  <tr key={listing._id} className="border-t border-gray-100">
-                    <td className="px-4 py-3">{listing.title}</td>
-                    <td className="px-4 py-3">{listing.category}</td>
-                    <td className="px-4 py-3">{listing.createdBy?.name || 'Unknown'}</td>
-                    <td className="px-4 py-3">{listing.availabilityStatus}</td>
-                    <td className="px-4 py-3">
-                      <button
-                        onClick={() => handleDeleteListing(listing._id)}
-                        className="bg-[#F54949] text-white px-3 py-1 rounded-full text-xs hover:bg-[#D84040]"
-                      >
-                        Delete
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
+            <div className="bg-white rounded-xl border border-[#E0E0E0] overflow-hidden">
+                <table className="w-full text-sm">
+                <thead className="text-xs text-gray-500 uppercase">
+                    <tr>
+                    <th className="px-4 py-3 text-left">Title</th>
+                    <th className="px-4 py-3 text-left">Category</th>
+                    <th className="px-4 py-3 text-left">Posted By</th>
+                    <th className="px-4 py-3 text-left">Posted Date</th>
+                    <th className="px-4 py-3 text-left">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {listings.map((listing) => (
+                    <tr key={listing._id} className="border-t border-gray-100">
+                        <td className="px-4 py-3 font-bold">{listing.title}</td>
+                        <td className="px-4 py-3">{listing.category}</td>
+                        <td className="px-4 py-3">{listing.createdBy?.name || 'Unknown'}</td>
+                        <td className="px-4 py-3 text-gray-500">
+                        {listing.createdAt
+                            ? new Date(listing.createdAt).toLocaleDateString('en-AU')
+                            : '—'}
+                        </td>
+                        <td className="px-4 py-3 text-[#86C5FF]">{listing.availabilityStatus}</td>
+                    </tr>
+                    ))}
+                </tbody>
+                </table>
+            </div>
+            )}
 
         {/* Users Tab */}
         {activeTab === 'users' && (
-          <div className="bg-white rounded-xl border border-[#E0E0E0] overflow-hidden">
-            <table className="w-full text-sm">
-              <thead className="bg-gray-50 text-gray-500 uppercase text-xs">
-                <tr>
-                  <th className="px-4 py-3 text-left">Name</th>
-                  <th className="px-4 py-3 text-left">Email</th>
-                  <th className="px-4 py-3 text-left">Role</th>
-                </tr>
-              </thead>
-              <tbody>
-                {users.map((u) => (
-                  <tr key={u._id} className="border-t border-gray-100">
-                    <td className="px-4 py-3">{u.name}</td>
-                    <td className="px-4 py-3">{u.email}</td>
-                    <td className="px-4 py-3">
-                      <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                        u.role === 'admin'
-                          ? 'bg-purple-100 text-purple-700'
-                          : 'bg-gray-100 text-gray-600'
-                      }`}>
-                        {u.role || 'user'}
-                      </span>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
+            <div className="bg-white rounded-xl border border-[#E0E0E0] overflow-hidden">
+                <table className="w-full text-sm">
+                <thead className="text-xs text-gray-500 uppercase">
+                    <tr>
+                    <th className="px-4 py-3 text-left">Name</th>
+                    <th className="px-4 py-3 text-left">Email</th>
+                    <th className="px-4 py-3 text-left">Joined Date</th>
+                    <th className="px-4 py-3 text-left">Last Login</th>
+                    <th className="px-4 py-3 text-left">Role</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {users.map((u) => (
+                    <tr key={u._id} className="border-t border-gray-100">
+                        <td className="px-4 py-3 font-bold">{u.name}</td>
+                        <td className="px-4 py-3">{u.email}</td>
+                        <td className="px-4 py-3 text-gray-500">
+                        {u.createdAt
+                            ? new Date(u.createdAt).toLocaleDateString('en-AU')
+                            : '—'}
+                        </td>
+                        <td className="px-4 py-3 text-gray-500">
+                        {u.lastLogin
+                            ? new Date(u.lastLogin).toLocaleDateString('en-AU')
+                            : '—'}
+                        </td>
+                        <td className="px-4 py-3">
+                        <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+                            u.role === 'admin'
+                            ? 'bg-violet-100 text-violet-700'
+                            : 'bg-gray-100 text-gray-600'
+                        }`}>
+                            {u.role || 'user'}
+                        </span>
+                        </td>
+                    </tr>
+                    ))}
+                </tbody>
+                </table>
+            </div>
+            )}
       </div>
     </div>
   );

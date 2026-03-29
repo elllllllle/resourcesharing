@@ -66,30 +66,17 @@ const ListingDetail = () => {
           </span>
           <h1 className="text-2xl font-bold mt-1 mb-1">{resource.title}</h1>
           <p className="text-sm text-gray-500 mb-4">{resource.category}</p>
-          <p className="text-gray-700 mb-6">{resource.description}</p>
+          <p className="mb-6">{resource.description}</p>
 
           <div className="text-sm text-gray-500 flex gap-6 mb-6">
             <span>👤 {resource.createdBy?.name || 'Unknown'}</span>
             <span>📍 {resource.location}</span>
+            <span>🗓️ {resource.createdAt
+                ? new Date(resource.createdAt).toLocaleDateString('en-AU')
+                : '—'}
+            </span>
           </div>
 
-          {/* Owner actions */}
-          {isOwner() && (
-            <div className="flex gap-3">
-              <button
-                onClick={() => navigate('/resources')}
-                className="bg-[#89D440] text-white px-6 py-2 rounded-full hover:bg-[#66BF0F]"
-              >
-                Edit
-              </button>
-              <button
-                onClick={handleDelete}
-                className="bg-[#F54949] text-white px-6 py-2 rounded-full hover:bg-[#D84040]"
-              >
-                Delete
-              </button>
-            </div>
-          )}
         </div>
       </div>
     </div>
