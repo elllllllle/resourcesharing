@@ -17,6 +17,9 @@ const Navbar = () => {
         {user ? (
           <>
             <Link to="/browse" className="mr-4">Find Resources</Link>
+            {user.role === 'admin' && (
+              <Link to="/admin" className="mr-4">Admin Panel</Link>
+            )}
             <Link to="/profile" className="mr-4">Profile</Link>
             <button
               onClick={handleLogout}
