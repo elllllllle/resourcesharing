@@ -7,6 +7,7 @@ import Resources from './pages/Resources';
 import BrowseListings from './pages/BrowseListings';
 import ListingDetail from './pages/ListingDetail';
 import Profile from './pages/Profile';
+import AdminPanel from './pages/AdminPanel';
 
 function AppRoutes() {
   const { user } = useAuth();
@@ -21,6 +22,7 @@ function AppRoutes() {
         <Route path="/resources/:id" element={<ListingDetail />} />
         <Route path="/resources" element={user ? <Resources /> : <Navigate to="/login" />} />
         <Route path="/profile" element={user ? <Profile /> : <Navigate to="/login" />} />
+        <Route path="/admin" element={user ? <AdminPanel /> : <Navigate to="/login" />} />
       </Routes>
     </>
   );
