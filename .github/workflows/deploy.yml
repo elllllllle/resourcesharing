@@ -40,8 +40,7 @@ jobs:
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            cd /home/ubuntu/sharemate
+            cd /home/ubuntu/resourcesharing
             git pull origin main
-            cd /home/ubuntu/sharemate/backend && npm install
-            cd /home/ubuntu/sharemate/frontend && npm install && npm run build
-            pm2 restart all
+            cd /home/ubuntu/resourcesharing/backend && npm install
+            pm2 restart sharemate-backend
