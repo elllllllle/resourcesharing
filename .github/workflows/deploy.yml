@@ -28,19 +28,13 @@ jobs:
 
   deploy:
     needs: test
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-
       - name: Deploy to EC2
-        uses: appleboy/ssh-action@v1.0.0
-        with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USERNAME }}
-          key: ${{ secrets.EC2_SSH_KEY }}
-          script: |
-            cd /home/ubuntu/resourcesharing
-            git pull origin main
-            cd /home/ubuntu/resourcesharing/backend && npm install
-            pm2 restart sharemate-backend
+        run: |
+          cd /home/ubuntu/resourcesharing
+          git pull origin main
+          cd /home/ubuntu/resourcesharing/backend && npm install
+          pm2 restart sharemate-backend
