@@ -12,7 +12,7 @@ ShareMate is a full-stack web application that enables community members to shar
 
 ## Public URL
 
-**Backend API:** http://3.106.246.107:5001
+**Backend API:** http://3.106.196.172:5001
 
 ---
 
@@ -142,7 +142,7 @@ sampleapp_IFQ636/
 
 ## Deployment
 
-- **EC2 Public IP:** 3.106.246.107
+- **EC2 Public IP:** 3.106.196.172
 - **Backend Port:** 5001
 - **Process Manager:** PM2 (`sharemate-backend`)
 
